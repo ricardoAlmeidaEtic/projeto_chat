@@ -1,0 +1,80 @@
+h1{
+    color:lightblue
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f8fa;
+}
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.tweet {
+    border-bottom: 1px solid #e1e8ed;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.tweet:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.tweet .user {
+    font-weight: bold;
+    color: #3d52a0;
+}
+.tweet .timestamp {
+    color: #8899a6;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+.tweet .content {
+    margin-top: 5px;
+}
+.who-to-follow,
+.trending-hashtags {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e1e8ed;
+}
+.who-to-follow h2,
+.trending-hashtags h2 {
+    margin-bottom: 10px;
+}
+.who-to-follow .user,
+.trending-hashtags .hashtag {
+    color: #3d52a0;
+    margin-bottom: 5px;
+}
+
+.twitter-input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    vertical-align: top;
+    resize: vertical; 
+  }
+  
+  .twitter-button {
+    background-color: #3d52a0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .twitter-button:hover {
+    background-color: darkblue;
+  }

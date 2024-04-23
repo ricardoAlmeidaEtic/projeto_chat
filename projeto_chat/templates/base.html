@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backend I</title>
+  {% load static%}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="{% static 'main.js' %}"></script>
+</head>
+
+<body>
+  <h1>Backend</h1>
+  {% block 'nav' %}
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">logout</button>
+      </form>
+    {% else %}
+      <a href="{% url 'signup' %}">signup</a>
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    <hr/>
+  {% endblock %}
+  {% block 'content' %} {% endblock %}
+</body>
+
+</html>

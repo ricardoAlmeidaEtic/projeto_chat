@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+    <div class="container">
+        <div class="tweet-list">
+            {%for message in object_list%}
+                <div class="tweet">
+                    <span class="user">{{message.user}}</span>
+                    <span class="timestamp">{{message.date}}</span>
+                    <div class="content">
+                        {{message.message}}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+            
+        <form method="post">
+            <textarea class="twitter-input" rows="4" placeholder="(100 characters max)" id="your_message" required></textarea>
+            <input type="hidden" id="your_id" value="{{ user.name }}" />
+            {% csrf_token %}
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}
