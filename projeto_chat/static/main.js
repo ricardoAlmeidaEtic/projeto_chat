@@ -5,9 +5,11 @@ window.onload = (event) => {
         + '/ws/chat/'
     );
 
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        const list = document.getElementById("tweet-list");  // Added missing const declaration
+    chatSocket.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
+        console.log("data: " + JSON.stringify(data)); // Check the structure of the received data
+        
+        const list = document.getElementById("tweet-list");
         if (list) {
             list.innerHTML += `
             <div class="tweet">
@@ -15,30 +17,42 @@ window.onload = (event) => {
                 <span class="timestamp">${data['date']}</span>
                 <div class="content">
                     ${data['message']}
-                </div>
-            </div>`;
+                </div>`
+                if (data['image'] !== "") {
+                    list.innerHTML += `<img src="/projeto_chat/static/${data['image']} " style="max-width: 100%;">`
+                }
+            list.innerHTML += `</div>`;
         }
-    };
+    });
 
-    chatSocket.onopen = function(event){
+    // Connection opened
+    chatSocket.addEventListener("open", (event) => {
         console.log('client says connection opened')
-    }
+    });
 
-    chatSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+    // Connection closed
+    chatSocket.addEventListener("close", (event) => {
+        console.log('client says connection closed')
+    });
 
-    document.querySelector('#submit').onclick = function(e) {
+    document.getElementById('submitMessage').onclick = (e) => {
+        e.preventDefault();
         const messageInputDom = document.querySelector('#your_message');
-        const userInputDom = document.querySelector('#your_id');
-
         const message = messageInputDom.value;
-        const id = userInputDom.value;
+        const imageInputDom = document.querySelector('#your_image');
+        const imageFile = imageInputDom.files[0];
+        const imageName = imageInputDom.files[0].name;
         
-        chatSocket.send(JSON.stringify({
-            'user':id,
-            'message': message,
-        }));
+        const reader = new FileReader();
+        reader.onload = () => {
+            const imageData = reader.result.split(',')[1];
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'imageData': imageData,
+                'imageName':imageName
+            }));
+        };
+        reader.readAsDataURL(imageFile);
         
         messageInputDom.value = '';
     };

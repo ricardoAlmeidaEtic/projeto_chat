@@ -6,5 +6,5 @@ from chatting.models import Message
 
 @admin.register(Message)
 class ProductAdmin(admin.ModelAdmin):
-    list_display=("id","message","date","user","enabled")
-    list_editable=("enabled",)
+    list_display=("id","message","date","user","image","enabled")
+    list_editable=("image","enabled",)

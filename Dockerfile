@@ -10,4 +10,4 @@ EXPOSE 8000
 
 RUN poetry install
 
-CMD poetry run python manage.py runserver 0.0.0.0:8000 redis:7
+CMD poetry run python manage.py runserver 0.0.0.0:8000

@@ -8,10 +8,11 @@ class Message(models.Model):
     message = models.CharField(max_length=100, null=False, blank=False,help_text="Sent Message")
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    image = models.FileField(max_length=100, blank=True, help_text="Sent Image")
     enabled = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return f"{self.user} {self.message}"
+        return f"{self.user} {self.message} {self.image}"
 
     class Meta:
         verbose_name = "Mensagem"
