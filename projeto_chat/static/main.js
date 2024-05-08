@@ -38,23 +38,41 @@ window.onload = (event) => {
     document.getElementById('submitMessage').onclick = (e) => {
         e.preventDefault();
         const messageInputDom = document.querySelector('#your_message');
-        const message = messageInputDom.value;
         const imageInputDom = document.querySelector('#your_image');
-        const imageFile = imageInputDom.files[0];
-        const imageName = imageInputDom.files[0].name;
-        
-        const reader = new FileReader();
-        reader.onload = () => {
-            const imageData = reader.result.split(',')[1];
+    
+        let imageFile = null;
+        let imageName = null;
+        let message = null;
+    
+        if (messageInputDom.value.trim() !== '') {
+            message = messageInputDom.value.trim();
+        } else {
+            console.warn("Message box needs to contain text to send a message, please write something...");
+            return;
+        }
+         
+        if (imageInputDom.files.length > 0) {
+            imageFile = imageInputDom.files[0];
+            imageName = imageInputDom.files[0].name;
+            
+            const reader = new FileReader();
+            reader.onload = () => {
+                const imageData = reader.result.split(',')[1];
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'imageData': imageData,
+                    'imageName': imageName
+                }));
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            // Send message without image
             chatSocket.send(JSON.stringify({
-                'message': message,
-                'imageData': imageData,
-                'imageName':imageName
+                'message': message
             }));
-        };
-        reader.readAsDataURL(imageFile);
-        
+        }
+    
         messageInputDom.value = '';
+        imageInputDom.value = '';
     };
-
 }
