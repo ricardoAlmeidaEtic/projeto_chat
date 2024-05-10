@@ -9,6 +9,7 @@ class Message(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     image = models.FileField(max_length=100, blank=True, help_text="Sent Image")
+    likes = models.IntegerField(default=0, help_text="Number of Likes")
     enabled = models.BooleanField(default=True)
 
     def __str__(self) -> str:

@@ -25,6 +25,14 @@ window.onload = (event) => {
         }
     });
 
+    chatSocket.addEventListener("like", (event) => {
+        const data = JSON.parse(event.data);
+        console.log("data: " + JSON.stringify(data)); // Check the structure of the received data
+        
+        const tweet = document.getElementById(`tweet-${data['id']}`);
+        tweet.getElementById('likenumber').text = `${data['likes']} likes`;
+    });
+
     // Connection opened
     chatSocket.addEventListener("open", (event) => {
         console.log('client says connection opened')

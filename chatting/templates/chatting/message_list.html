@@ -4,7 +4,7 @@
     <div class="container">
         <div id="tweet-list">
             {%for message in object_list%}
-                <div class="tweet">
+                <div class="tweet" id="tweet-{{message.id}}">
                     <span class="user">{{message.user}}</span>
                     <span class="timestamp">{{message.date}}</span>
                     <div class="content">
@@ -13,11 +13,13 @@
                     {% if message.image %}
                         <img src="{% static message.image %}" style="max-width: 100%;">
                     {% endif %}
+                    <i id="like" class="fa fa-heart fa-outline" style="font-size:30px;margin-top: 40px;margin-right: 10px;"></i>
+                    <small id="likenumber" style="font-size:15px;color:black;">{{message.likes}} likes</small>
                 </div>
             {% endfor %}
         </div>
             
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
             {% csrf_token %}
             <textarea id="your_message" placeholder="Enter your message" style="width:100%"></textarea>
             <input type="file" id="your_image" accept="image/*">
