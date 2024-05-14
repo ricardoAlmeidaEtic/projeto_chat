@@ -13,17 +13,22 @@ window.onload = (event) => {
         
         const list = document.getElementById("tweet-list");
         if (list) {
-            list.innerHTML += `
+            let postHTML = `
             <div class="tweet">
                 <span class="user">${data['user']}</span>
                 <span class="timestamp">${data['date']}</span>
                 <div class="content">
                     ${data['message']}
-                </div>`
-                if (data['image'] !== "") {
-                    list.innerHTML += `<img src="/projeto_chat/static/${data['image']} " style="max-width: 100%;">`
-                }
-            list.innerHTML += `</div>`;
+                </div>`;
+            if (data['image'] !== "") {
+                postHTML += `<img src="/projeto_chat/static/${data['image']}" style="max-width: 100%;">`;
+            }
+            postHTML += `
+                <i id="like" class="fa fa-heart fa-outline" style="font-size:30px;margin-top: 40px;margin-right: 10px;"></i>
+                <small id="likenumber" style="font-size:15px;color:black;">0 likes</small>
+            </div>`;
+    
+            list.innerHTML += postHTML;
         }
     });
 
