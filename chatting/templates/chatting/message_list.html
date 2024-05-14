@@ -18,12 +18,22 @@
                 </div>
             {% endfor %}
         </div>
-            
-        <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
-            {% csrf_token %}
-            <textarea id="your_message" placeholder="Enter your message" style="width:100%"></textarea>
-            <input type="file" id="your_image" accept="image/*">
-            <button type="submit" id="submitMessage">Submit</button>
-        </form>
+        
+        {% if user.is_authenticated %}
+            <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+                {% csrf_token %}
+                <textarea id="your_message" placeholder="Enter your message" style="width:100%"></textarea>
+                <input type="file" id="your_image" accept="image/*">
+                <button type="submit" id="submitMessage">Submit</button>
+            </form>
+        {% else %}
+            <div class="log in" style="margin-top: 100px;">
+                <br>
+                You are not logged in, if you want to send a message please do so.
+                <br>
+                <a href="{% url 'signup' %}">signup</a>
+                <a href="{% url 'login' %}">login</a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

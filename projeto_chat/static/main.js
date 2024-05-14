@@ -1,4 +1,6 @@
 window.onload = (event) => {
+    scrollToBottom();
+
     const chatSocket = new WebSocket(
         'ws://'
         + window.location.host
@@ -43,44 +45,51 @@ window.onload = (event) => {
         console.log('client says connection closed')
     });
 
-    document.getElementById('submitMessage').onclick = (e) => {
-        e.preventDefault();
-        const messageInputDom = document.querySelector('#your_message');
-        const imageInputDom = document.querySelector('#your_image');
-    
-        let imageFile = null;
-        let imageName = null;
-        let message = null;
-    
-        if (messageInputDom.value.trim() !== '') {
-            message = messageInputDom.value.trim();
-        } else {
-            console.warn("Message box needs to contain text to send a message, please write something...");
-            return;
-        }
-         
-        if (imageInputDom.files.length > 0) {
-            imageFile = imageInputDom.files[0];
-            imageName = imageInputDom.files[0].name;
+    if(document.getElementById('submitMessage')){
+        document.getElementById('submitMessage').onclick = (e) => {
+            e.preventDefault();
+            const messageInputDom = document.querySelector('#your_message');
+            const imageInputDom = document.querySelector('#your_image');
+        
+            let imageFile = null;
+            let imageName = null;
+            let message = null;
+        
+            if (messageInputDom.value.trim() !== '') {
+                message = messageInputDom.value.trim();
+            } else {
+                console.warn("Message box needs to contain text to send a message, please write something...");
+                return;
+            }
             
-            const reader = new FileReader();
-            reader.onload = () => {
-                const imageData = reader.result.split(',')[1];
+            if (imageInputDom.files.length > 0) {
+                imageFile = imageInputDom.files[0];
+                imageName = imageInputDom.files[0].name;
+                
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const imageData = reader.result.split(',')[1];
+                    chatSocket.send(JSON.stringify({
+                        'message': message,
+                        'imageData': imageData,
+                        'imageName': imageName
+                    }));
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                // Send message without image
                 chatSocket.send(JSON.stringify({
-                    'message': message,
-                    'imageData': imageData,
-                    'imageName': imageName
+                    'message': message
                 }));
-            };
-            reader.readAsDataURL(imageFile);
-        } else {
-            // Send message without image
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-        }
-    
-        messageInputDom.value = '';
-        imageInputDom.value = '';
-    };
+            }
+        
+            messageInputDom.value = '';
+            imageInputDom.value = '';
+        };
+    }
+
+}
+
+function scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
 }

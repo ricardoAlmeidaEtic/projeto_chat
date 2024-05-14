@@ -4,16 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Backend I</title>
+  <title>ETIC_Chat</title>
   {% load static%}
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="{% static 'main.js' %}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'cropped-fave-32x32.png' %}" type="image/x-icon">
 </head>
 
 <body>
-  <div id="navbar">
-    <h1>CREW</h1>
+  <div id="navbar"> 
+    <a class="logo" href="/chatting"><h1>etic_chat</h1></a>
     {% block 'nav' %}
       {% if user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}">
@@ -21,10 +25,9 @@
           <button type="submit">logout</button>
         </form>
       {% else %}
-        <a href="{% url 'signup' %}">signup</a>
-        <a href="{% url 'login' %}">login</a>
+        <a href="{% url 'signup' %}" style="padding-bottom: 50px;">signup</a>
+        <a href="{% url 'login' %}" style="padding-bottom: 50px;">login</a>
       {% endif %}
-      <hr/>
   </div>
   {% endblock %}
   {% block 'content' %} {% endblock %}

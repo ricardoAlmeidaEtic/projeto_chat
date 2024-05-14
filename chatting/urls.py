@@ -4,5 +4,5 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns=[
-    path("",login_required(ListAllMessages.as_view()), name="messages")
+    path("", ListAllMessages.as_view(), name="messages")
 ]
