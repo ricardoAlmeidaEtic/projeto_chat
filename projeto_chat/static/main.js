@@ -92,6 +92,58 @@ window.onload = (event) => {
             imageInputDom.value = '';
         };
     }
+    
+}
+
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+const like = (id,element) =>{
+    const likeIcon = element.querySelector('#likeIcon');
+    const likeNumber = element.querySelector('#likeNumber');
+    const csrftoken = getCSRFToken();
+    let action = null;
+
+    if (likeIcon.classList.contains('pressed')){
+        action = "unlike"
+    } else{
+        action = "like"
+    }
+
+    fetch('/chatting/like/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ 
+            message_id: id,
+            action: action
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            if(action == "like"){
+                likeIcon.classList.add("pressed");
+            }else{
+                likeIcon.classList.remove("pressed");
+            }
+            console.log('Message liked, new like count:', data.likes);
+            likeNumber.innerText = data.likes + ' likes';
+        } else {
+            console.error('Error liking message:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 
 }
 

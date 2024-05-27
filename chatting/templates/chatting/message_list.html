@@ -13,8 +13,10 @@
                     {% if message.image %}
                         <img src="{% static message.image %}" style="max-width: 100%;">
                     {% endif %}
-                    <i id="like" class="fa fa-heart fa-outline" style="font-size:30px;margin-top: 40px;margin-right: 10px;"></i>
-                    <small id="likenumber" style="font-size:15px;color:black;">{{message.likes}} likes</small>
+                    <div id="like" onclick="like('{{message.id}}',this)">
+                        <i id="likeIcon" class="fa fa-heart fa-outline" style="font-size:30px;margin-top: 40px;margin-right: 10px;"></i>
+                        <small id="likeNumber" style="font-size:15px;color:black;">{{message.likes}} likes</small>
+                    </div>
                 </div>
             {% endfor %}
         </div>

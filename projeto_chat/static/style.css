@@ -193,3 +193,7 @@ body {
     text-shadow: 1px 1px 10px black;
     color: white;  
 }
+
+.pressed{
+    color: red;
+}

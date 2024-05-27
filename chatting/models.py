@@ -18,3 +18,15 @@ class Message(models.Model):
     class Meta:
         verbose_name = "Mensagem"
         verbose_name_plural = "Mensagens"
+
+class MessagesLiked(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user} liked {self.message}"
+
+    class Meta:
+        verbose_name = "Mensagem com like"
+        verbose_name_plural = "Mensagens com likes"
